@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# needs work to nest questions
+
+# ask the user yes or no
+
+if [ $# -lt 3 ]
+then
+	echo "ask:--the ask-yes-or-no script--"
+	echo "USAGE: ask <question> <yes action> <no action>"
+	exit 1
+fi
+
+question=$1
+yesaction=$2
+noaction=$3
+
+while true; do
+	read -p "$question [y/n]: " yn
+	case $yn in
+		[Yy]*) $yesaction; break;;
+		[Nn]*) $noaction; break;;
+	esac
+done
+

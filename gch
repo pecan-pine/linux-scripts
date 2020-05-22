@@ -1,0 +1,21 @@
+#!/bin/bash  
+
+# gentoo chroot
+# drives may need updating 
+
+echo "Mounting drives into /mnt/gentoo..."
+sudo mount /dev/sda4 /mnt/gentoo
+sudo mount /dev/sda2 /mnt/gentoo/boot
+#swapon /dev/sda3
+#echo "hi"
+echo "Mounting proc, sys, dev..."
+sudo mount -t proc proc /mnt/gentoo/proc
+sudo mount --rbind /sys /mnt/gentoo/sys
+sudo mount --make-rslave /mnt/gentoo/sys
+sudo mount --rbind /dev /mnt/gentoo/dev
+sudo mount --make-rslave /mnt/gentoo/dev
+echo "chrooting into gentoo..."
+echo "be sure to run 'source /etc/profile'"
+sudo chroot /mnt/gentoo /bin/bash
+#echo "this was run" not sure if next line gets run, commenting out...
+#source /etc/profile

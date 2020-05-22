@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# script to make automatic backups of home (or other) folder
+# change directory to make it easier to specify files
+cd /media/backup/manjaro-backups
+
+# define variables
+
+# the current date and time
+now=$(date '+%Y-%m-%d-%H:%M')
+# only current date (for log files)
+today=$(date '+%Y-%m-%d')
+# directory for the backup
+bakdir="$now-mariak-home-backup"
+# daily log name
+dailylog="$today.log"
+# main log name
+touch backups.log
+mainlog=backups.log
+
+# make the day's log file if not already made
+if [[ $(ls | grep $today.log) != $today.log ]]
+then
+	echo "Created daily log file $dailylog" >> $mainlog
+fi
+touch $dailylog
+
+# make backup directory and log about it in daily log
+mkdir $bakdir
+cp -r ~/. $bakdir
+echo "Created backup at $bakdir." >> $dailylog
+
+# make package list file if not already made
+touch $bakdir/packagelist.txt
+pacman -Qqe > $bakdir/packagelist.txt 
+
+# if there are some backups already, delete the oldest one
+if [[ $(ls | grep -c 'backup') -gt 3 ]]
+then
+	rm -r $(ls -t | grep 'backup' | tail -1)
+	# echo "Removed oldest backup" >> $mainlog
+fi
+

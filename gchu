@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# gentoo unchroot
+# drives may need updating
+
+echo "unmounting drives..."
+sudo umount -l /mnt/gentoo/dev /mnt/gentoo/sys
+sudo umount /mnt/gentoo/proc /mnt/gentoo/boot
+sudo umount -l /mnt/gentoo
+sudo umount /mnt/gentoo
+echo "done"
