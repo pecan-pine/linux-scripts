@@ -6,7 +6,7 @@ echo "ua:--the unmount-all script--"
 
 if [[ $# = 0 ]]
 then
-	drives=(sda2 sda5 sdb1 sdb2 sdb4)    
+	drives=(sda2 sda5 sdb1 sdb2 sdb4 sdb6)    
 #excluding sda1 since this is expected to run on sda1
 #excluding sda4 since that is shared files drive
 #excluding sdb3 and sdb5 since those are storage also
@@ -28,7 +28,7 @@ while true; do
 	esac
 done
 
-for drive in "$@"
+for drive in "${drives[@]}"
 do
     sudo umount /mnt/$drive
 done

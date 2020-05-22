@@ -7,7 +7,7 @@ echo "ma--the mount all script--"
 
 if [[ $# = 0 ]]
 then
-	drives=(sda2 sda5 sdb1 sdb2 sdb4)    
+	drives=(sda2 sda5 sdb1 sdb2 sdb4 sdb6) 
 #excluding sda1 since this is expected to run on sda1
 #excluding sda4 since that is shared files drive
 #excluding sdb3 and sdb5 since those are storage also
@@ -16,7 +16,7 @@ else
 fi
 
 echo "Preparing to mount the following locations:"
-for drive in "${drives[@]}"
+for drive in ${drives[@]}
 do
     echo "/mnt/$drive"
 done
@@ -29,7 +29,7 @@ while true; do
 	esac
 done
 
-for drive in "$@"
+for drive in "${drives[@]}"
 do
     sudo mount /dev/$drive /mnt/$drive
 done
