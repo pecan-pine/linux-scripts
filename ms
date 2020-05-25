@@ -14,7 +14,7 @@ else
 	filename=$1
 fi
 
-echo "Preparing to create executable file $filename in current directory:"
+echo "Preparing to create and open executable file $filename in current directory:"
 echo " " $PWD
 while true; do
 	read -p "Is this ok? [y/n]: " yn
@@ -27,6 +27,7 @@ done
 touch $filename
 echo '#!/bin/bash' > $filename
 chmod +x ./$filename
+(gedit $filename)
 
 echo "done"
 

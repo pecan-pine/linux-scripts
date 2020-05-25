@@ -4,7 +4,7 @@
 # change directory to make it easier to specify files
 cd /media/backup/manjaro-backups
 
-# define variables
+# define the variables
 
 # the current date and time
 now=$(date '+%Y-%m-%d-%H:%M')
@@ -37,7 +37,7 @@ pacman -Qqe > $bakdir/packagelist.txt
 # if there are some backups already, delete the oldest one
 if [[ $(ls | grep -c 'backup') -gt 3 ]]
 then
-	rm -r $(ls -t | grep 'backup' | tail -1)
+	rm -rf $(ls -t | grep 'backup' | tail -1)
 	# echo "Removed oldest backup" >> $mainlog
 fi
 

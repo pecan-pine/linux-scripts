@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# script to copy files from source directory to copy directory. 
+# the script first uses cmp to compare files so that the user can browse differences before copying
+# USAGE: dcmp source target
+if [[ $# -ne 2 && $# -ne 1 ]]
+then 
+	echo "USAGE: dcmp <source dir> <target dir>"
+	echo "or: dcmp <target dir> (assumes source dir is current dir)"
+	exit 1
+fi
+if [[ $# -eq 1 ]]
+then
+	source="*"
+	copy=$1
+else
+	source="$1/*"
+	copy=$2
+fi
+
+clear
+echo "-------"
+echo $sourcename
+for fn in $source
+do 
+	compare=$(cmp $fn $copy/$fn)
+	result=$?
+	if [[ result -ne 0 ]]
+	then
+		echo "cmp:" $compare
+		echo
+		if [[ $result -eq 1 ]]
+		then
+			echo "Here is the output of diff. Source file lines on top, copy file lines on bottom."
+			echo
+			diff $fn $copy/$fn
+			#line_num=$(echo $compare | cut -d' ' -f 7)
+			#cat -n $fn | grep "^ *$line_num"
+		fi
+		echo
+		while true
+		do
+			read -p "Copy file '$fn' from $source to $copy/$fn? [y/n] " yn
+			case $yn in
+				[Yy]*) echo "copying file..."; cp $fn $copy/$fn; echo "done"; break;;
+				[Nn]*) echo "File not copied."; break;;
+			esac
+			echo
+		done
+	else
+		echo "No change in $fn"
+	fi
+done
+
+while true
+do	
+	read -p "Would you like to update a git repository in the target directory? [y/n] " yn
+	case $yn in
+		[Yy]*) 
+			cd $copy 
+			git status
+			read -p "Enter to add files" dummy
+			git add .
+			git status
+			read -p "Enter to commit files" dummy
+			read -p "Commit message: " message
+			git commit -m "$message"
+			git status
+			read -p "Enter to push master to origin" dummy
+			git push origin master
+			git status
+			echo "done"
+			break;;
+		[Nn]*) echo "No action taken."; break;;
+	esac
+done
+
