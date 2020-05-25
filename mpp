@@ -4,37 +4,38 @@ echo "mpp--the make c++ program template script"
 
 if [[ $# -ne 1 ]]
 then
-	echo "Usage: mpp programname.cpp"
+	echo "Usage: mpp programname (.cpp is added automatically)"
 	exit 1
 fi
 
-fn=$1
+fn="$1.cpp"
 
 for name in *
 do
-	if [[ $fn == $name ]]
+	echo $name
+	if [[ "$fn" = "$name" ]]
 	then
 		echo "Filename already exists"
 		exit 1
 	fi
 done
 
-echo "Preparing to create and open c++ file $fn in current directory:"
+echo "Preparing to create and open c++ file--"$fn"--in current directory:"
 echo " " $PWD
 while true; do
 	read -p "Is this ok? [y/n]: " yn
 	case $yn in
-		[Yy]*) echo "Creating file $fn..."; break ;;
+		[Yy]*) echo "Creating file $fn ..."; break ;;
 		[Nn]*) echo "Aborted"; exit 1 ;;
 	esac
 done
 
-touch $fn
+touch "$fn"
 echo "#include <iostream>" >> $fn
 echo "using namespace std;" >> $fn
 echo >> $fn
-echo "int main() {" >> $fn
+echo 'int main() {' >> $fn
 echo >> $fn
-echo "}" >> $fn
+echo '}' >> $fn
 
 (gedit $fn)

@@ -3,11 +3,12 @@
 # script to copy files from source directory to copy directory. 
 # the script first uses cmp to compare files so that the user can browse differences before copying
 # USAGE: dcmp source target
-if [[ $# -ne 2 && $# -ne 1 ]]
+if [[ $# -ne 1 ]]
 then 
 	echo "dcmp--the directory comparison script--"
-	echo "USAGE: dcmp <source dir> <target dir>"
-	echo "or: dcmp <target dir> (assumes source dir is current dir)"
+	echo "USAGE: dcmp <target dir> (assumes source dir is currend dir)"
+	#echo "USAGE: dcmp <source dir> <target dir>"
+	#echo "or: dcmp <target dir> (assumes source dir is current dir)"
 	exit 1
 fi
 if [[ $# -eq 1 ]]
@@ -20,9 +21,9 @@ else
 fi
 
 clear
-echo "-------"
+echo "-----------------------------------------"
 echo "dcmp--the directory comparison script--"
-echo "-------"
+echo "-----------------------------------------"
 echo $sourcename
 for fn in $source
 do 
