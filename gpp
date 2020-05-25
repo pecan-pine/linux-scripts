@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [[ $# -ne 1 ]]
+then
+	echo "gpp:--the make/run c++ file with g++ script--"
+	echo "USAGE: gpp <program_name> (without .cpp)"
+	exit 1
+fi
+
+g++ "$1.cpp" -o $1
+
+./$1
