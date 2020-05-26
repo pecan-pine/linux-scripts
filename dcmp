@@ -44,7 +44,11 @@ do
 		echo
 		while true
 		do
-			read -p "Copy file '$fn' from $source to $copy/$fn? [y/n] " yn
+			echo "Preparing to copy file '$fn' from"
+			echo "    $source ($PWD)"
+			echo "        to"
+			echo "    $copy/$fn"
+			read -p "Is this ok? [y/n] " yn
 			case $yn in
 				[Yy]*) echo "copying file..."; cp $fn $copy/$fn; echo "done"; break;;
 				[Nn]*) echo "File not copied."; break;;

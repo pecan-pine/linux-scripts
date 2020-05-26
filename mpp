@@ -12,7 +12,6 @@ fn="$1.cpp"
 
 for name in *
 do
-	echo $name
 	if [[ "$fn" = "$name" ]]
 	then
 		echo "Filename already exists"
