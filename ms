@@ -27,7 +27,7 @@ done
 touch $filename
 echo '#!/bin/bash' > $filename
 chmod +x ./$filename
-(gedit $filename)
+(gedit $filename &)
 
 echo "done"
 
