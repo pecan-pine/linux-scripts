@@ -37,4 +37,4 @@ echo 'int main() {' >> $fn
 echo >> $fn
 echo '}' >> $fn
 
-( gedit $fn )
+( gedit $fn & )
