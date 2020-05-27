@@ -3,31 +3,45 @@
 # script to copy files from source directory to copy directory. 
 # the script first uses cmp to compare files so that the user can browse differences before copying
 # USAGE: dcmp source target
-if [[ $# -ne 1 ]]
+if [[ $# -ne 1 && $# -ne 2 ]]
 then 
 	echo "dcmp--the directory comparison script--"
 	echo "USAGE: dcmp <target dir> (assumes source dir is currend dir)"
-	#echo "USAGE: dcmp <source dir> <target dir>"
+	echo "USAGE: dcmp <source dir> <target dir>"
 	#echo "or: dcmp <target dir> (assumes source dir is current dir)"
 	exit 1
 fi
 if [[ $# -eq 1 ]]
+# if the user is in the source directory
 then
 	source="*"
-	copy=$1
+	sourcedir="."
+	copydir=$1
 else
 	source="$1/*"
-	copy=$2
+	sourcedir="$1"
+	copydir=$2
 fi
+
+# isolate the filenames from the path in the source directory. This is automatic if the user is in the source directory. 
+filenames=()
+for path in $source
+do
+	# split the path into words across '/'
+	IFS='/' read -r -a sourcepath <<< $path
+	# take the last word (i.e. the file name) and append to filenames
+	filenames+=(${sourcepath[-1]})
+done
 
 clear
 echo "-----------------------------------------"
 echo "dcmp--the directory comparison script--"
 echo "-----------------------------------------"
-echo $sourcename
-for fn in $source
+
+# loop through all the file names in source dir
+for fn in ${filenames[@]}
 do 
-	compare=$(cmp $fn $copy/$fn)
+	compare=$(cmp $sourcedir/$fn $copydir/$fn)
 	result=$?
 	if [[ result -ne 0 ]]
 	then
@@ -37,7 +51,7 @@ do
 		then
 			echo "Here is the output of diff. Source file lines on top, copy file lines on bottom."
 			echo
-			diff $fn $copy/$fn
+			diff $sourcedir/$fn $copydir/$fn
 			#line_num=$(echo $compare | cut -d' ' -f 7)
 			#cat -n $fn | grep "^ *$line_num"
 		fi
@@ -45,12 +59,12 @@ do
 		while true
 		do
 			echo "Preparing to copy file '$fn' from"
-			echo "    $source ($PWD)"
+			echo "    $sourcedir"
 			echo "        to"
-			echo "    $copy/$fn"
+			echo "    $copydir/$fn"
 			read -p "Is this ok? [y/n] " yn
 			case $yn in
-				[Yy]*) echo "copying file..."; cp $fn $copy/$fn; echo "done"; break;;
+				[Yy]*) echo "copying file..."; cp $sourcedir/$fn $copydir/$fn; echo "done"; break;;
 				[Nn]*) echo "File not copied."; break;;
 			esac
 			echo
@@ -65,7 +79,7 @@ do
 	read -p "Would you like to update a git repository in the target directory? [y/n] " yn
 	case $yn in
 		[Yy]*) 
-			cd $copy 
+			cd $copydir 
 			git status
 			read -p "Enter to add files" dummy
 			git add .
