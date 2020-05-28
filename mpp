@@ -4,7 +4,7 @@ echo "mpp--the make c++ program template script"
 
 if [[ $# -ne 1 ]]
 then
-	echo "Usage: mpp programname (.cpp is added automatically)"
+	echo "Usage: mpp <program_name> (.cpp is added automatically)"
 	exit 1
 fi
 
