@@ -11,7 +11,7 @@ then
 #excluding sda4 since that is shared files drive
 #excluding sdb3 and sdb5 since those are storage also
 else
-	drives=$@
+	drives=( $@ )
 fi
 
 echo "Preparing to unmount the following locations:"

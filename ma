@@ -12,7 +12,7 @@ then
 #excluding sda4 since that is shared files drive
 #excluding sdb3 and sdb5 since those are storage also
 else
-	drives=$@
+	drives=( $@ )
 fi
 
 echo "Preparing to mount the following locations:"
@@ -31,6 +31,7 @@ done
 
 for drive in "${drives[@]}"
 do
+	echo "mounting /dev/$drive at /mnt/$drive..."
     sudo mount /dev/$drive /mnt/$drive
 done
 
