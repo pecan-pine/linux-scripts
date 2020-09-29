@@ -1,0 +1,83 @@
+#!/bin/bash
+
+# script to copy files from source directory to copy directory. 
+# same as dcmp, but meant for automated use
+
+# the script first uses cmp to compare files
+# if difference is detected, copies source to target
+
+# USAGE: dcmp source target
+# USAGE: dcmp target (if currently in source)
+if [[ $# -ne 1 && $# -ne 2 ]]
+then 
+	echo "dcmp-auto--the automatic directory comparison script--"
+	echo "USAGE: dcmp <target dir> (assumes source dir is currend dir)"
+	echo "USAGE: dcmp <source dir> <target dir>"
+	#echo "or: dcmp <target dir> (assumes source dir is current dir)"
+	exit 1
+fi
+if [[ $# -eq 1 ]]
+# if the user is in the source directory
+then
+	source="*"
+	sourcedir="."
+	copydir=$1
+else
+	source="$1/*"
+	sourcedir="$1"
+	copydir=$2
+fi
+
+# isolate the filenames from the path in the source directory. This is automatic if the user is in the source directory. 
+filenames=()
+for path in $source
+do
+	# split the path into words across '/'
+	IFS='/' read -r -a sourcepath <<< $path
+	# take the last word (i.e. the file name) and append to filenames
+	filenames+=(${sourcepath[-1]})
+done
+
+# begin processing:
+
+# loop through all the file names in source dir
+for fn in ${filenames[@]}
+do 
+	compare=$(cmp $sourcedir/$fn $copydir/$fn)
+	result=$?
+	if [[ result -ne 0 ]]
+	then
+        echo "Change in files found. Copying $sourcedir to $copydir..."
+        for filename in "${filenames[@]}"; do
+            cp $sourcedir/$fn $copydir/$fn
+        done
+        exit 3
+	fi
+done
+
+echo -e "\033[0;32mNo differences found.\033[0m"
+exit 0
+
+# while true
+# do	
+# 	read -p "Would you like to update a git repository in the source directory? [y/N] " yn
+# 	case $yn in
+# 		[Yy]*) 
+# 			cd $sourcedir 
+# 			git status
+# 			read -p "Enter to add files" dummy
+# 			git add .
+# 			git status
+# 			read -p "Enter to commit files" dummy
+# 			read -p "Commit message: " message
+# 			git commit -m "$message"
+# 			git status
+# 			read -p "Enter to push master to origin" dummy
+# 			git push origin master
+# 			git status
+# 			echo "done"
+# 			break;;
+# 		[Nn]*|"") echo "No action taken."; break;;
+# 	esac
+# done
+
