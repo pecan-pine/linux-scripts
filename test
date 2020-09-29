@@ -1,8 +1,0 @@
-#!/bin/bash
-
-q="Would you like to search for 'ua'?"
-a=$(ls | grep 'ua')
-n=$(echo "not searching")
-
-o=$(bash ask)
-echo $o
