@@ -3,6 +3,7 @@
 # script to copy files from source directory to copy directory. 
 # the script first uses cmp to compare files so that the user can browse differences before copying
 # USAGE: dcmp source target
+# USAGE: dcmp target (if currently in source)
 if [[ $# -ne 1 && $# -ne 2 ]]
 then 
 	echo "dcmp--the directory comparison script--"
@@ -45,7 +46,7 @@ do
 	result=$?
 	if [[ result -ne 0 ]]
 	then
-		echo "cmp:" $compare
+		echo "cmp: $compare"
 		echo
 		if [[ $result -eq 1 ]]
 		then
@@ -62,24 +63,24 @@ do
 			echo "    $sourcedir"
 			echo "        to"
 			echo "    $copydir/$fn"
-			read -p "Is this ok? [y/n] " yn
+			read -p "Is this ok? [y/N] " yn
 			case $yn in
 				[Yy]*) echo "copying file..."; cp $sourcedir/$fn $copydir/$fn; echo "done"; break;;
-				[Nn]*) echo "File not copied."; break;;
+				[Nn]*|"") echo "File not copied."; break;;
 			esac
 			echo
 		done
 	else
-		echo "No change in $fn"
+		echo -e "\033[0;32mNo change in $fn\033[0m"
 	fi
 done
 
 while true
 do	
-	read -p "Would you like to update a git repository in the target directory? [y/n] " yn
+	read -p "Would you like to update a git repository in the source directory? [y/N] " yn
 	case $yn in
 		[Yy]*) 
-			cd $copydir 
+			cd $sourcedir 
 			git status
 			read -p "Enter to add files" dummy
 			git add .
@@ -93,7 +94,7 @@ do
 			git status
 			echo "done"
 			break;;
-		[Nn]*) echo "No action taken."; break;;
+		[Nn]*|"") echo "No action taken."; break;;
 	esac
 done
 

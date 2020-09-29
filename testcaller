@@ -1,6 +1,0 @@
-#!/bin/bash
-
-q='Say hello?'
-a="echo hello"
-n='$(ask "say goodbye?" "echo goodbye" "echo buhbye")'
-echo $(./ask "$q" "$a" "$n")
