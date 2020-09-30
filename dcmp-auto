@@ -47,7 +47,7 @@ do
 	result=$?
 	if [[ result -ne 0 ]]
 	then
-        echo "Change in files found. Copying $sourcedir to $copydir..."
+        echo -e "\033[0;31mChange in files found. Copying $sourcedir to $copydir...\033[0m"
         for filename in "${filenames[@]}"; do
             cp $sourcedir/$fn $copydir/$fn
         done
