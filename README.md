@@ -1,6 +1,11 @@
 # linux-scripts
 Various linux scripts--drive mounting and unmounting, configuring grub, changing file permissions, etc.
 
+When run without arguments, `ask`, `dcmp`, `dcmp-auto`, `gpp`, `mpp` and `ms` will display 
+their name, description, and usage information. Scripts `bcmp`, `install.sh`, `ma` and `ua` have default behavior
+(arguments are optional), but will describe what they are preparing to do and will ask the user
+for permission. The script `backup-home` will run without arguments. 
+
 ## ask
 
 A script that acts as a function which will ask the user a yes or no question, then perform one of two 
@@ -10,7 +15,9 @@ actions is not very readable. I think it would be better as a more specific func
 ## backup-home
 
 A script that will make a backup of my home directory (or any other directory). The script makes a 
-copy of the directory, writes a note in a log file, and deletes old backups. 
+copy of the directory, writes a note in a log file, and deletes old backups. `backup-home` is meant to be used automatically, so when run it does not ask permission to proceed. Currently there is a 
+bug where if the backup directory does not exist, it just copies the home directory into a folder
+in the home directory. 
 
 ## bcmp
 
@@ -19,7 +26,8 @@ to the local binary directory.
 
 ## colorfunction 
 
-A set of bash functions to make coloring text easier. For example:
+A set of bash functions to make coloring text easier. These are meant to be used in other 
+bash scripts. For example:
 ```Bash
 color Hello! red
 ```
