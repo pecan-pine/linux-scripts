@@ -14,7 +14,7 @@ copy of the directory, writes a note in a log file, and deletes old backups.
 
 ## bcmp
 
-A shortcut script for "dcmp ~/linux-scripts ~/.local/bin" to copy my linux-scripts git repository
+The "binary compare script". A shortcut script for "dcmp ~/linux-scripts ~/.local/bin" to copy my linux-scripts git repository
 to the local binary directory. 
 
 ## colorfunction 
@@ -30,7 +30,7 @@ require this big function just for a few colors. For using many colors, I think 
 
 ## dcmp
 
-A script which will compare files in a source directory to files with the same name in a target directory. dcmp uses the bash command `cmp` 
+The "directory compare" script. A script which will compare files in a source directory to files with the same name in a target directory. dcmp uses the bash command `cmp` 
 to compare files. If changes are found, it then displays the output of `diff` on the two files, and asks the user if they would like to copy the file from source to target. If no changes are found, it echo's in green that it found no changes in that file. In the end, it asks the user if they would like to update the git repository in the source directory, and optionally walks through a git add/commit/push of the repository. 
 
 ## dcmp-auto
@@ -62,7 +62,7 @@ The "make script" script. It makes an executable file in the current directory w
 ```
 # ua
 
-Unmounts all drives in a stored or user-provided list. This is meant to undo the effects of `ma` after updating grub. 
+The "unmount all" script. Unmounts all drives in a stored or user-provided list. This is meant to undo the effects of `ma` after updating grub. 
 
 
 
