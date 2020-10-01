@@ -23,7 +23,7 @@ A set of bash functions to make coloring text easier. For example:
 ```Bash
 color Hello! red
 ```
-will echo <span style="color:red">Hello!</span>. 
+will print `Hello!` in red. 
 
 In most cases, I think it's easier to just look up the escape codes for a certain color than to 
 require this big function just for a few colors. For using many colors, I think it is fairly useful. 
