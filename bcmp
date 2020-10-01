@@ -1,6 +1,6 @@
 #!/bin/bash
 
 echo "bcmp--the bin directory comparison script--"
-read -p "Preparing to compare source ~/linux-scripts to target ~/.local/bin  with dcmp. Press enter to continue" dummyvar
+read -p "Preparing to compare source ~/.local/bin to target ~/linux-scripts with dcmp. Press enter to continue" dummyvar
 
 dcmp ~/linux-scripts ~/.local/bin 
