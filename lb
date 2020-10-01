@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# script to cd to ~/.local/bin
-
-cd ~/.local/bin
