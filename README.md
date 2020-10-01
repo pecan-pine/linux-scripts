@@ -24,6 +24,10 @@ in the home directory.
 The "binary compare script". A shortcut script for "dcmp ~/linux-scripts ~/.local/bin" to copy my linux-scripts git repository
 to the local binary directory. 
 
+## chroot-scripts 
+
+Contains scripts for helping log in to linux filesystems from a different drive. There is one general version, and one for Gentoo. 
+
 ## colorfunction 
 
 A set of bash functions to make coloring text easier. These are meant to be used in other 
