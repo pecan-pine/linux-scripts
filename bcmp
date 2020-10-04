@@ -3,4 +3,4 @@
 echo "bcmp--the bin directory comparison script--"
 read -p "Preparing to compare source ~/linux-scripts to target ~/.local/bin with dcmp. Press enter to continue" dummyvar
 
-dcmp ~/linux-scripts ~/.local/bin 
+dcmp ~/linux-scripts ~/.local/bin chroot-scripts install.sh LICENSE README.md

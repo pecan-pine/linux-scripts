@@ -1,20 +1,25 @@
 #!/bin/bash
-# TODO: add option to skip certain files in source directory
 
 # script to copy files from source directory to copy directory. 
 # the script first uses cmp to compare files so that the user can browse differences before copying
+
+# USAGE: dcmp source target source_dir_file_names_to_skip
 # USAGE: dcmp source target
 # USAGE: dcmp target (if currently in source)
-if [[ $# -ne 1 && $# -ne 2 ]]
+
+# if run with no arguments, print usage
+if [[ $# -eq 0 ]]
 then 
 	echo "dcmp--the directory comparison script--"
 	echo "USAGE: dcmp <target dir> (assumes source dir is currend dir)"
 	echo "USAGE: dcmp <source dir> <target dir>"
-	#echo "or: dcmp <target dir> (assumes source dir is current dir)"
+    echo "USAGE: dcmp <source dir> <target dir> <source dir file names to skip>"
 	exit 1
 fi
+
+# assign sourcedir and copydir (target dir) 
+# depending on if the user is in the source dir or not
 if [[ $# -eq 1 ]]
-# if the user is in the source directory
 then
 	source="*"
 	sourcedir="."
@@ -23,6 +28,17 @@ else
 	source="$1/*"
 	sourcedir="$1"
 	copydir=$2
+fi
+
+# assign skipnames if some were given
+if [[ $# -ge 3 ]]
+then
+    # shift out first two arguments
+    shift 
+    shift
+    skipnames="$@"
+else
+    skipnames=()
 fi
 
 # isolate the filenames from the path in the source directory. This is automatic if the user is in the source directory. 
@@ -43,6 +59,16 @@ echo "-----------------------------------------"
 # loop through all the file names in source dir
 for fn in ${filenames[@]}
 do 
+    # skip if the filename is in the skipname list
+    for sn in ${skipnames[@]}; do
+        if [ "$fn" == "$sn" ]
+        then
+            echo -e "\033[1;33mSkipping file $fn...\033[0m"
+            continue 2
+        fi
+    done
+
+    # compare the source file to target file
 	compare=$(cmp $sourcedir/$fn $copydir/$fn)
 	result=$?
 	if [[ result -ne 0 ]]
