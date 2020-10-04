@@ -8,10 +8,8 @@ echo "ma--the mount all script--"
 if [[ $# = 0 ]]
 then
 	# drives=(sda2 sda5 sdb1 sdb2 sdb4 sdb6) 
-	drives=( sda1 sda2 sda3 sdb2 sdb5 )
-#excluding sda1 since this is expected to run on sda1
-#excluding sda4 since that is shared files drive
-#excluding sdb3 and sdb5 since those are storage also
+	# drives=( sda1 sda2 sda3 sdb2 sdb5 )
+    drives=( sda1 sda2 sdb5 )
 else
 	drives=( $@ )
 fi
