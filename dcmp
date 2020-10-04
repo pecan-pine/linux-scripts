@@ -1,4 +1,5 @@
 #!/bin/bash
+# TODO: add option to skip certain files in source directory
 
 # script to copy files from source directory to copy directory. 
 # the script first uses cmp to compare files so that the user can browse differences before copying
