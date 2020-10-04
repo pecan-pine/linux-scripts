@@ -21,9 +21,9 @@ do
 done
 
 while true; do
-	read -p "Is this ok? [y/n]: " yn
+	read -p "Is this ok? [Y/n]: " yn
 	case $yn in
-		[Yy]*) echo "Proceeding to mount drives"; break ;;
+		[Yy]*|"") echo "Proceeding to mount drives"; break ;;
 		[Nn]*) echo "Aborted"; exit 1 ;;
 	esac
 done
@@ -38,10 +38,10 @@ echo "done"
 
 
 while true; do
-	read -p "Would you like to configure grub? [y/n]: " yn
+	read -p "Would you like to configure grub? [y/N]: " yn
 	case $yn in
 		[Yy]*) echo "Configuring grub at /boot/grub/grub.cfg..."; break ;;
-		[Nn]*) echo "Grub configuration cancelled"; exit 1 ;;
+		[Nn]*|"") echo "Grub configuration cancelled"; exit 1 ;;
 	esac
 done
 #echo "to configure grub, type 'grub-mkconfig -o /boot/grub/grub.cfg'"

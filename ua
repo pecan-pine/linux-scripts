@@ -20,9 +20,9 @@ do
 done
 
 while true; do
-	read -p "Is this ok? [y/n]: " yn
+	read -p "Is this ok? [Y/n]: " yn
 	case $yn in
-		[Yy]*) echo "Proceeding to unmount drives"; break ;;
+		[Yy]*|"") echo "Proceeding to unmount drives"; break ;;
 		[Nn]*) echo "Aborted"; exit 1 ;;
 	esac
 done
